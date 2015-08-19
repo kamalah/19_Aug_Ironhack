@@ -1,7 +1,7 @@
 class CommandLine
-	def initialize
-		@hard_password = "1234"
-		@user_name = "Alex"
+	def initialize (name ="Alex", password="1234")
+		@user_name = name
+		@hard_password = password
 		@correct = false
 		@enter_user = ""
 		@enter_password = ""
@@ -39,3 +39,9 @@ my_command = CommandLine.new
 my_command.get_entry
 my_command.check_entry
 my_command.get_text
+
+
+other_command = CommandLine.new("Kamalah", "2345")
+other_command.get_entry
+other_command.check_entry
+other_command.get_text
