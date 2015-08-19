@@ -33,13 +33,9 @@ class Slides
 		slide = @all_slides[ind]
 		center_vertical(slide)
 		find_endl = 0
-		print_slide = slide
-
-		while(find_endl <print_slide.length) #print line by line
+		slide.each_line do |line|
 			center_right(slide)
-			find_endl = print_slide.index("\n")
-			puts print_slide[0..find_endl]
-			print_slide = print_slide[find_endl+1..print_slide.length]
+			puts line
 		end
 		center_vertical(slide)	
 	end
