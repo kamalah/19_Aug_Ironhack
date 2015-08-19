@@ -3,7 +3,7 @@ class CommandLine
 		@hard_password = "1234"
 		@user_name = "Alex"
 		@correct = false
-		@enter_user =""
+		@enter_user = ""
 		@enter_password = ""
 	end
 
@@ -16,23 +16,21 @@ class CommandLine
 	end
 
 	def check_entry
-		if (@enter_user == @user_name && @enter_password == @hard_password)
-			@correct = true
+		if @correct = (@enter_user == @user_name && @enter_password == @hard_password)
+			puts "\nCorrect password entered!"
 		else
-			@correct = false
+			puts "\nWrong user name or password."
 		end
 	end
 
 	def get_text
 		if @correct
-			puts "\nCorrect password entered!"
 			print "Please enter text: "
 			text = gets.chomp
 			text_array = text.split
 			puts "There are #{text_array.length} words."
-		else
-			puts "Wrong user name or password."
 		end
+		
 	end
 end
 
