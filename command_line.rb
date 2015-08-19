@@ -21,7 +21,7 @@ class CommandLine
 		if @correct = (@enter_user == @user_name && @enter_password == @hard_password)
 			puts "\nCorrect password entered!"
 		else
-			puts "\nWrong user name or password."
+			puts "\nWrong user name or password. :-("
 		end
 	end
 
@@ -30,13 +30,11 @@ class CommandLine
 			print "Please enter text: "
 			@text = gets.chomp
 		end
-
 	end
 
 	def show_options
 		if @correct
-			
-			puts "Select option below: "
+			puts "\nSelect option below: "
 			puts "1. Count words"
 			puts "2. Count letter"
 			puts "3. Reverse text"
@@ -46,20 +44,20 @@ class CommandLine
 			@options = gets.chomp
 
 			case @options
-			when "1"
-				text_array = @text.split
-				puts "There are #{text_array.length} words."
-			when "2"
-				@text = @text.sub(" ", "")
-				 puts "There are #{@text.length} letters."
-			when "3"
-				puts "The reverse is #{@text.reverse}"
-			when "4"
-				puts "The Uppercase is #{@text.upcase}"
-			when "5"
-				puts "The Lowercase is #{@text.downcase}"
-			else
-				puts "Not a valid option."	
+				when "1"
+					text_array = @text.split
+					puts "There are #{text_array.length} words."
+				when "2"
+					@text = @text.gsub(" ", "")
+					 puts "There are #{@text.length} letters."
+				when "3"
+					puts "The reverse is #{@text.reverse}"
+				when "4"
+					puts "The Uppercase is #{@text.upcase}"
+				when "5"
+					puts "The Lowercase is #{@text.downcase}"
+				else
+					puts "Not a valid option."	
 			end
 		end
 	end
