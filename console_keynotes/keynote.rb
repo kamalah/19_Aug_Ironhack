@@ -1,17 +1,22 @@
 require 'terminfo'
 require 'io/console'
+require 'pry'
 
 class Slides
 	attr_accessor :all_slides
 	def initialize
-		@all_slides =[]
+		@all_slides =[""]
 
 	end
 
 	def get_slides(file_name)
+		index = 0
 		IO.foreach(file_name) do |line|
 			if line.strip != "----"
-				@all_slides<<line
+				@all_slides[index]<<line
+			else
+				index += 1
+				@all_slides[index] = ""
 			end
 		end	
 	end
@@ -31,10 +36,14 @@ class Presentation
 	def initialize(slides)
 		@slides = slides
 		@location = 0
+		@size = TermInfo.screen_size
 	end
 
 	def start_show
-		show_slide(0)
+		show_slide(@slides.send_slide(0))
+		while @location !=-1
+			check_input
+		end
 	end
 
 	def check_input
@@ -59,15 +68,15 @@ class Presentation
 
 	def next_slide
 		if @location < (@slides.number_slides-1)
-					@location += 1
-					show_slide(@location)
+			@location += 1
+			show_slide(@slides.send_slide(@location))
 		end
 	end
 
 	def previous_slide
 		if @location > 0
 			@location -= 1
-			show_slide(@location)
+			show_slide(@slides.send_slide(@location))
 		end
 	end
 
@@ -79,19 +88,34 @@ class Presentation
 	end
 
 
-	def show_slide (ind)
+	def show_slide (slide)
 		system "clear"
-		size = TermInfo.screen_size
-		(size[0]/2).times do
+		center_vertical(slide)
+
+		find_endl = 0
+		print_slide = slide
+
+		while(find_endl <print_slide.length) #print line by line
+			center_right(slide)
+			find_endl = print_slide.index("\n")
+			puts print_slide[0..find_endl]
+			print_slide = print_slide[find_endl+1..print_slide.length]
+		end
+
+		center_vertical(slide)	
+	end
+
+	def center_vertical(slide)
+		above_lines = (@size[0] - slide.count("\n"))/2
+		above_lines.times do
 			puts "\n"
 			end
-		spaces = (size[1] - (@slides.send_slide(ind).length))/2
+	end
+
+	def center_right(slide)
+		spaces = (@size[1] - slide.index("\n"))/2
 		spaces.times do
 			print " "
-			end
-				puts @slides.send_slide(ind)
-		(size[0]/2).times do
-			puts "\n"
 			end
 	end
 end
@@ -99,13 +123,9 @@ end
 
 my_slides = Slides.new
 
-my_slides.get_slides("slides.txt")
+my_slides.get_slides("slides2.txt")
 
 my_presentation = Presentation.new(my_slides)
-
 my_presentation.start_show
-while (my_presentation.location != -1)
-	my_presentation.check_input
-end
 
-#Presentation.new.make_presentation(my_slides)
+
