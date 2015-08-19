@@ -29,20 +29,20 @@ class CommandLine
 		if @correct
 			print "Please enter text: "
 			@text = gets.chomp
-			
 		end
 
 	end
 
 	def show_options
 		if @correct
-			puts "Select option below"
+			
+			puts "Select option below: "
 			puts "1. Count words"
 			puts "2. Count letter"
 			puts "3. Reverse text"
 			puts "4. Uppercase"
 			puts "5. Lowercase"
-
+			print ">"
 			@options = gets.chomp
 
 			case @options
