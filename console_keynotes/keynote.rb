@@ -21,10 +21,6 @@ class Slides
 		end	
 	end
 
-	def send_slide(ind)
-		@all_slides[ind]
-	end
-
 	def number_slides
 		@all_slides.length
 	end
@@ -34,7 +30,7 @@ class Slides
 		center_vertical(slide)
 		find_endl = 0
 		slide.each_line do |line|
-			center_right(slide)
+			center_right(line)
 			puts line
 		end
 		center_vertical(slide)	
@@ -47,8 +43,8 @@ class Slides
 			end
 	end
 
-	def center_right(slide)
-		spaces = (@size[1] - slide.index("\n"))/2
+	def center_right(slide_line)
+		spaces = (@size[1] - slide_line.length)/2
 		spaces.times do
 			print " "
 			end
@@ -57,8 +53,7 @@ class Slides
 end
 
 class Presentation
-	attr_reader :location
-
+	
 	def initialize(slides)
 		@slides = slides
 		@location = 0
@@ -107,14 +102,13 @@ class Presentation
 	end
 
 	def run_auto
-		while (next_slide)
+		while(next_slide)
 			sleep(3)
 		end
 		@location =-1
 	end
 
-
-	def show_slide (ind)
+	def show_slide(ind)
 		system "clear"
 		@slides.show_slide(ind)
 	end
